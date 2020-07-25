@@ -17,6 +17,23 @@ result_path = os.path.join(os.path.dirname(__file__), result_path)
 latin = list("qwertyuiopasdfghjklzxcvbnm")
 contains_latin = lambda txt: any((s in latin for s in txt))
 
+def remove_bd(txt):
+    rev = []
+    for i, s in enumerate(txt[:-1]):
+        if s == 'ъ' and not txt[i+1].isalpha():
+            rev.append(i)
+    if rev:
+        t = list(txt)
+        for k in rev[::-1]:
+            del t[k]
+            
+        #print(txt)
+        #print(t)
+        return ''.join(t)
+    
+    return txt
+        
+
 
 lines = []
 
@@ -38,12 +55,13 @@ res2 = []
 for r in res:
     
     for p in r:
-        if '\r' in p:
+        if 'i' in p:
             print(p)
     
     
     if not contains_latin(''.join(r)) and len(r) > 3:
-        res2 += [re.sub(r'\(\W+\)', '', p.strip().replace('?', 'е').replace('i','и').replace('@','о').replace('*', '').replace('`', '')) + '\n' for p in r]
+        new = [re.sub(r'\(\W+\)', '', p.strip().replace('?', 'е').replace('і','и').replace('@','о').replace('*', '').replace('`', '')) for p in r]
+        res2 += [remove_bd(p + '\n')  for p in new]
     
 with open(os.path.join(result_path, 'combined.txt'), 'w') as f:
         f.writelines(res2)
