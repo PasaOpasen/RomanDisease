@@ -12,8 +12,8 @@ cat("Corpus length:", nchar(text), "\n")
 
 
 
-maxlen <- 60  # Length of extracted character sequences
-step <- 3  # We sample a new sequence every `step` characters
+maxlen <- 50  # Length of extracted character sequences
+step <- 5  # We sample a new sequence every `step` characters
 
 text_indexes <- seq(1, nchar(text) - maxlen, by = step)
 # This holds our extracted sequences
@@ -51,7 +51,7 @@ for (i in 1:length(sentences)) {
 }
 
 
-save(x, y, chars, char_indices, sentences, next_chars, maxlen, file = 'arrays.rdata')
+save(x, y, chars, char_indices, sentences, next_chars, maxlen, file = 'arrays 50 5.rdata')
 
 
 

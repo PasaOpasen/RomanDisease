@@ -2,7 +2,7 @@
 library(keras)
 
 
-load('arrays.rdata')
+load('arrays 50 5.rdata')
 
 
 model_name = 'simple_fit'
