@@ -26,16 +26,15 @@ y_test = y[val_inds,]
 
 model <- keras_model_sequential() %>% 
   layer_lstm(units = 128, input_shape = c(maxlen, length(chars)), 
-             recurrent_activation = "sigmoid", return_sequences = T, dropout = 0.4) %>%
-  layer_lstm(units = 128, recurrent_activation = "sigmoid") %>%
+             recurrent_activation = "sigmoid", recurrent_dropout = 0, dropout = 0.5, return_sequences = F) %>%
   #layer_batch_normalization() %>% 
-  layer_dropout(rate = 0.5) %>% 
+  #layer_dense(units = 128, activation = 'relu') %>% 
   layer_dense(units = length(chars), activation = "softmax")
 
 
 model %>% compile(
   loss = "categorical_crossentropy", 
-  optimizer = optimizer_rmsprop(lr = 0.1)
+  optimizer = optimizer_adam(lr = 0.01)
 )   
 
 model %>% 
@@ -46,7 +45,7 @@ model %>%
       callbacks = list(
         callback_reduce_lr_on_plateau(
           monitor = "val_loss",
-          patience = 1,
+          patience = 3,
           factor = 0.7
         )
       )

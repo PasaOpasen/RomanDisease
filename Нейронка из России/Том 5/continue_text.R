@@ -34,19 +34,16 @@ sample_next_char <- function(preds, temperature = 1.0) {
 }
 
 
+model = load_model_hdf5('5book30epochs.h5')
 
-
-for(fit_path in c(
-  #'50 5 30epoch.h5'#, 
-  'fit2_30epochs_1.76val_loss.h5'
-  )
-  ){
+for(k in 1:5){
   
-  model = load_model_hdf5(fit_path)
+  s = ''
   
-  for (temperature in c(0.2, 0.5, 0.7, 1.0)) {
+  for (temperature in c(0.2, 0.4, 0.5)) {
     
     cat("------ temperature:", temperature, "\n")
+    s = c(s,paste('\n\ntemperature:',temperature,'\n'))
     
     generated_chars <- strsplit(sentence, "")[[1]]
     generated_text = text
@@ -77,9 +74,10 @@ for(fit_path in c(
     }
     cat("\n\n")
     
-    writeLines(generated_text,file.path(getwd(),text_path, paste(temperature,file_name) ))
+    #writeLines(generated_text,file.path(getwd(),text_path, paste(temperature,file_name) ))
+    s = c(s,generated_text)
   }
-  
+  writeLines(paste0(s,collapse = ''),file.path(getwd(),text_path, paste(k,file_name) ))
 }
 
 
