@@ -26,6 +26,7 @@ if(count >= maxlen){
 load('arrays.rdata')
 cat('data is loaded\n')
 
+
 sample_next_char <- function(preds, temperature = 1.0) {
 
   preds = exp(log(as.numeric(preds))/temperature)
@@ -33,8 +34,42 @@ sample_next_char <- function(preds, temperature = 1.0) {
   which.max(rmultinom(1, 1, preds)[,1])
 }
 
+right_next_char <- function(preds) which.max(as.numeric(preds))
 
-model = load_model_hdf5('5book30epochs.h5')
+
+
+model = load_model_hdf5('5book100epochs.h5')
+
+
+
+
+generated_chars <- strsplit(sentence, "")[[1]]
+generated_text = text
+sampled <- array(0, dim = c(1, maxlen+1, length(chars)))
+
+for (t in 1:length(generated_chars)) {
+  char <- generated_chars[[t]]
+  sampled[1, t, char_indices[[char]]] <- 1
+}
+
+for (i in 1:100) {
+  
+  preds <- model %>% predict(sampled[,1:maxlen,, drop = F], verbose = 0)
+  next_index <- right_next_char(preds[1,])
+  next_char <- chars[[next_index]]
+  sampled[1, maxlen+1, char_indices[[next_char]]] <- 1
+  sampled[1,1:maxlen,] = sampled[1,2:(maxlen+1),]
+  sampled[1,maxlen+1,] = sampled[1,maxlen+1,]*0
+  
+  generated_text <- paste0(generated_text, next_char)
+
+  cat(next_char)
+}
+cat("\n\n")
+
+writeLines(generated_text,file.path(getwd(),text_path, paste(0,file_name) ))
+
+
 
 for(k in 1:5){
   
@@ -57,7 +92,7 @@ for(k in 1:5){
     }
     
     # generate characters
-    for (i in 1:300) {
+    for (i in 1:400) {
       
       preds <- model %>% predict(sampled[,1:maxlen,, drop = F], verbose = 0)
       next_index <- sample_next_char(preds[1,], temperature)
