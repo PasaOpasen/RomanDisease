@@ -53,7 +53,8 @@ mask = imageio.imread('cross.png')
 
 from wordcloud import WordCloud
 
-wordcloud = WordCloud(colormap = 'prism', mask = mask, background_color = 'white' )
+wordcloud = WordCloud(colormap = 'twilight', 
+                      mask = mask, background_color = 'white' )
 
 #wordcloud = wordcloud.generate(text)
 wordcloud = wordcloud.fit_words(total_vocab)
