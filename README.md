@@ -1,5 +1,7 @@
 # Римская болезнь (пятикнижие)
 
+[![Join the chat at https://gitter.im/RomanDisease/community](https://badges.gitter.im/RomanDisease/community.svg)](https://gitter.im/RomanDisease/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **"Римская болезнь"** — это набор моих произведений о вырождении человека, рассортированных на пять томов по жанрам и хронологии: от статей до поэмы.
 
 Я посвятил этому труду три года жизни с марта-апреля 2015-го до середины 2018-го. С тех пор я лишь нахожу подтверждения своим высказываниям, иногда исправляю опечатки и изредка веду дневник.
